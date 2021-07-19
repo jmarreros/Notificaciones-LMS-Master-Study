@@ -2,7 +2,7 @@
 /*
 Plugin Name: Notificaciones de correo para LMS MasterStudy
 Plugin URI: https://decodecms.com
-Description: Plugin for sending notifications emails for MasterStudy LMS Plugin
+Description: Plugin for sending notifications emails for MasterStudy LMS Plugin, requiere do_action('dcms_complete_lesson') como parte del plugin LMS
 Version: 1.0
 Author: Jhon Marreros Guzmán
 Author URI: https://decodecms.com

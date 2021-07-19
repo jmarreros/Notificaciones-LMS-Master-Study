@@ -7,10 +7,6 @@ use dcms\notifications\includes\Database;
 class Process{
 
     public function __construct(){
-        error_log(print_r('Process',true));
-
-        // $this->process_email_notification(5926, 5917, 1);
-
         // Para las lecciones
         add_action('dcms_complete_lesson', [$this, 'lesson_passed'], 10, 3);
         // Para las preguntas
@@ -28,7 +24,7 @@ class Process{
     public function quiz_passed($user_id, $quiz_id, $progress){
         if($progress == 100) {
             $db = new Database();
-            $course_id = $db->get_lat_course_id($quiz_id);
+            $course_id = $db->get_last_course_id($quiz_id);
             $this->process_email_notification($quiz_id, $course_id, $user_id);
         }
     }
