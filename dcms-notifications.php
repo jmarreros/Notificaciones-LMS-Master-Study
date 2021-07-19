@@ -18,6 +18,7 @@ use dcms\notifications\includes\Plugin;
 use dcms\notifications\includes\Submenu;
 use dcms\notifications\includes\Process;
 use dcms\notifications\includes\Database;
+use dcms\notifications\includes\Settings;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,6 +46,7 @@ final class Loader{
 		include_once ( DCMS_NOTIF_PATH . '/includes/submenu.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/process.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/database.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/settings.php');
 	}
 
 	// Load tex domain
@@ -74,6 +76,7 @@ final class Loader{
 		new SubMenu();
 		new Process();
 		new Database();
+		new Settings();
 	}
 
 }

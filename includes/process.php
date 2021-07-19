@@ -25,25 +25,27 @@ class Process{
 
     // Para los cuestionarios
     public function quiz_passed($user_id, $quiz_id, $progress){
-
         if($progress == 100) {
-
             $db = new Database();
             $course_id = $db->get_last_course_id($quiz_id);
-
             $this->send_email_notification($quiz_id, $course_id, $user_id);
-            error_log('Quizz ' . $quiz_id . ' completada por usuario: ' . $user_id);
         }
     }
 
     // Para las asignaciones
     public function save_post_assigment_meta($meta_id, $object_id, $meta_key, $meta_value){
-        if ( $meta_key == 'status' ){
-            error_log('Meta value: '. $meta_value);
-            error_log(print_r($object_id,true));
+        if ( $meta_key == 'status' && $meta_value = 'passed'){
+            $user_id    = get_post_meta($object_id, 'student_id', true);
+            $course_id  = get_post_meta($object_id, 'course_id', true);
+            $assigment_id = get_post_meta($object_id, 'assignment_id', true);
+
+            $this->send_email_notification($assigment_id, $course_id, $user_id);
         }
     }
 
+
+    // Métodos complementarios
+    // --------------------------
 
     // Send email notifications
     private function send_email_notification($lesson_id, $course_id, $user_id){
@@ -61,7 +63,7 @@ class Process{
         }
     }
 
-    // Función que dada una funcióin encuentra:
+    // Función que dada una función encuentra:
     // Si es el final de una sección devuelte el nombre de la sección
     // Si es el final del curso devuelve true, caso contrario false
     private function is_finish_course($item_id, $course_id = 0){
