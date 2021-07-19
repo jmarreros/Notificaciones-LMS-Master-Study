@@ -2,11 +2,12 @@
 
 namespace dcms\notifications\includes;
 
+use dcms\notifications\includes\Database;
+
 class Process{
 
     public function __construct(){
         error_log(print_r('Process',true));
-
 
         // Para las lecciones
         add_action('dcms_complete_lesson', [$this, 'lesson_passed'], 10, 3);
@@ -19,20 +20,18 @@ class Process{
 
     // Para las lecciones
     public function lesson_passed($user_id, $lesson_id, $course_id){
-
-        // Ubicar si la lección es la última de un módulo
-        // Ubicar si la lección es la última de un curso
-
-        $result = $this->is_finish_course($lesson_id, $course_id);
-
-        error_log('Lección ' . $lesson_id . ' completada por usuario: ' . $user_id. ' Curso:'.$course_id);
-        error_log('Resultado: ' . $result );
+        $this->send_email_notification($lesson_id, $course_id, $user_id);
     }
 
-    // Para las preguntas
+    // Para los cuestionarios
     public function quiz_passed($user_id, $quiz_id, $progress){
+
         if($progress == 100) {
 
+            $db = new Database();
+            $course_id = $db->get_last_course_id($quiz_id);
+
+            $this->send_email_notification($quiz_id, $course_id, $user_id);
             error_log('Quizz ' . $quiz_id . ' completada por usuario: ' . $user_id);
         }
     }
@@ -42,6 +41,23 @@ class Process{
         if ( $meta_key == 'status' ){
             error_log('Meta value: '. $meta_value);
             error_log(print_r($object_id,true));
+        }
+    }
+
+
+    // Send email notifications
+    private function send_email_notification($lesson_id, $course_id, $user_id){
+
+        $result = $this->is_finish_course($lesson_id, $course_id);
+
+        if ( gettype($result) == 'string') {
+            error_log('Fin del módulo: ' . $result );
+            error_log('Lección ' . $lesson_id . ' completada por usuario: ' . $user_id. ' Curso:'.$course_id);
+        } else {
+            if ($result) {
+                error_log('Fin del curso');
+                error_log('Lección ' . $lesson_id . ' completada por usuario: ' . $user_id. ' Curso:'.$course_id);
+            }
         }
     }
 
@@ -76,21 +92,3 @@ class Process{
     }
 
 }
-
-
-    // Si es el final del curso el que se acaba de completar
-    // private function is_finish_course($item_id, $course_id = 0){
-    //     if ( $course_id ){
-
-    //         $curriculum = get_post_meta($course_id, 'curriculum', true);
-    //         $arr = explode(',', $curriculum);
-
-    //         if ( $count($arr) ){
-    //             if ( $item_id == (int)$arr[$count($arr) - 1]){
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
