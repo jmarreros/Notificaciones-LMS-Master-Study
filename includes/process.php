@@ -31,7 +31,7 @@ class Process{
 
     // Para las asignaciones
     public function save_post_assigment_meta($meta_id, $object_id, $meta_key, $meta_value){
-        if ( $meta_key == 'status' && $meta_value = 'passed'){
+        if ( $meta_key == 'status' && $meta_value == 'passed'){
             $user_id    = get_post_meta($object_id, 'student_id', true);
             $course_id  = get_post_meta($object_id, 'course_id', true);
             $assigment_id = get_post_meta($object_id, 'assignment_id', true);
@@ -66,7 +66,7 @@ class Process{
         $module_title = $result;
 
         if ( $enviar_modulo && gettype($result) == 'string') {
-            $this->send_email($name,$email,$course_title,$module_title);
+            $result = $this->send_email($name,$email,$course_title,$module_title);
         }
 
         if ( $enviar_curso &&  $result === true ){
