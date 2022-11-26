@@ -111,7 +111,6 @@ class Process{
         });
     }
 
-    // Función que dada una función encuentra:
     // Si es el final de una sección devuelte el nombre de la sección
     // Si es el final del curso devuelve true, caso contrario false
     private function is_finish_course($item_id, $course_id = 0){
