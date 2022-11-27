@@ -145,8 +145,8 @@ class Settings{
                              'label_for' => 'dcms_text_email_module',
                              'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
                              %name% (nombre de usuario),
-                             %course_title% (título del curso),
                              %module_title% (título del módulo),
+                             %course_title% (título del curso),
                              ', 'dcms-notifications')
                             ]
         );
