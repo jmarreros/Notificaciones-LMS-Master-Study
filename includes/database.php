@@ -30,4 +30,10 @@ class Database{
         $sql = "SELECT display_name, user_email FROM {$this->table_user} WHERE id = {$id_user}";
         return $this->wpdb->get_row($sql);
     }
+
+	// Public function
+	public function is_module_course($id_course){
+		$sql = "SELECT post_parent FROM {$this->wpdb->prefix}posts WHERE ID = $id_course";
+		return boolval($this->wpdb->get_var($sql)??0);
+	}
 }

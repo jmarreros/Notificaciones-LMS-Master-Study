@@ -67,23 +67,33 @@ class Process {
 		$section_title = $result;
 
 		if ( $send_section && gettype( $result ) == 'string' ) {
-			$result = $this->send_email( $name, $email, $course_title, $section_title );
+			$this->send_email( $name, $email, $section_title, '', $course_title );
 		}
 
-		if ( $send_course && $result === true ) {
-			$this->send_email( $name, $email, $course_title );
+		if ( $result === true ) {
+			$is_module = $db->is_module_course( $course_id );
+
+			if ( $send_course && ! $is_module ) {
+				$this->send_email( $name, $email, '', '', $course_title );
+			}
+			if ( $send_module && $is_module ) {
+				$this->send_email( $name, $email, '', $course_title, '' );
+			}
 		}
 	}
 
 	// Función para enviar el correo
-	private function send_email( $name, $email, $course_title, $section_title = '' ) {
+	private function send_email( $name, $email, $section_title = '', $module_title = '', $course_title = '' ) {
 		$this->sender_configuration();
 
 		$options = get_option( 'dcms-notif_options' );
 
 		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
 
-		if ( ! empty( $section_title ) ) { // Correo para fin de un módulo
+		if ( ! empty( $section_title ) ) { // correo para fin de seccion
+			$subject = $options['dcms_subject_email_section'];
+			$body    = $options['dcms_text_email_section'];
+		} elseif ( ! empty( $module_title ) ) { // correo para fin de módulo
 			$subject = $options['dcms_subject_email_module'];
 			$body    = $options['dcms_text_email_module'];
 		} else { // correo para fin de curso
@@ -94,6 +104,7 @@ class Process {
 		$body = str_replace( '%name%', $name, $body );
 		$body = str_replace( '%course_title%', $course_title, $body );
 		$body = str_replace( '%section_title%', $section_title, $body );
+		$body = str_replace( '%module_title%', $course_title, $body );
 
 		return wp_mail( $email, $subject, $body, $headers );
 	}

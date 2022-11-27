@@ -146,7 +146,6 @@ class Settings{
                              'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
                              %name% (nombre de usuario),
                              %module_title% (título del módulo),
-                             %course_title% (título del curso),
                              ', 'dcms-notifications')
                             ]
         );
