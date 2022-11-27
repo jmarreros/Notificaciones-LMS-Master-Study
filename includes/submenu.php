@@ -14,7 +14,7 @@ class Submenu{
     // Register submenu
     public function register_submenu(){
         add_submenu_page(
-            DCMS_SUBMENU,
+	        DCMS_NOTIF_SUBMENU,
             __('Notificaciones LMS','dcms-notifications'),
             __('Notificaciones LMS','dcms-notifications'),
             'manage_options',

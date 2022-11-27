@@ -50,10 +50,11 @@ class Process{
         $result = $this->is_finish_course($lesson_id, $course_id);
         $options = get_option( 'dcms-notif_options' );
 
-        $enviar_modulo = isset($options['dcms_enable_email_module']);
-        $enviar_curso = isset($options['dcms_enable_email_course']);
+	    $send_section = isset($options['dcms_enable_email_section']);
+        $send_module = isset($options['dcms_enable_email_module']);
+        $send_course = isset($options['dcms_enable_email_course']);
 
-        if ( ! $enviar_modulo && ! $enviar_curso ) return;
+        if ( ! $send_section && ! $send_module && ! $send_course ) return;
 
         // User data
         $db = new Database;
@@ -65,11 +66,11 @@ class Process{
         $course_title = get_the_title($course_id);
         $module_title = $result;
 
-        if ( $enviar_modulo && gettype($result) == 'string') {
+        if ( $send_module && gettype($result) == 'string') {
             $result = $this->send_email($name,$email,$course_title,$module_title);
         }
 
-        if ( $enviar_curso &&  $result === true ){
+        if ( $send_course &&  $result === true ){
             $this->send_email($name,$email,$course_title);
         }
     }

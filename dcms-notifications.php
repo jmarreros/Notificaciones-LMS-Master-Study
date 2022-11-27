@@ -36,7 +36,7 @@ final class Loader{
 		define ('DCMS_NOTIF_PATH', plugin_dir_path( __FILE__ ));
 		define ('DCMS_NOTIF_URL', plugin_dir_url( __FILE__ ));
 		define ('DCMS_NOTIF_BASE_NAME', plugin_basename( __FILE__ ));
-		define ('DCMS_SUBMENU', 'options-general.php');
+		define ('DCMS_NOTIF_SUBMENU', 'options-general.php');
 	}
 
 	// Load all the files we need
@@ -72,11 +72,11 @@ final class Loader{
 		$this->load_includes();
 		$this->load_domain();
 		$this->add_link_plugin();
-		new Plugin();
-		new SubMenu();
-		new Process();
-		new Database();
-		new Settings();
+		new Plugin;
+		new SubMenu;
+		new Process;
+		new Database;
+		new Settings;
 	}
 
 }

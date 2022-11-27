@@ -15,6 +15,7 @@ class Settings{
     public function init_configuration(){
         register_setting('dcms_notif_options_bd', 'dcms-notif_options' );
         $this->fields_email_general();
+	    $this->fields_email_section();
         $this->fields_email_module();
         $this->fields_email_course();
     }
@@ -52,6 +53,54 @@ class Settings{
         );
 
     }
+
+
+	private function fields_email_section(){
+		add_settings_section('dcms_email_section_section',
+			__('Configuración correo fin seccion', 'dcms-notifications'),
+			[$this,'dcms_section_cb'],
+			'dcms_notif_sfields' );
+
+
+		add_settings_field('dcms_enable_email_section',
+			__('Habilitar', 'dcms-notifications'),
+			[$this, 'dcms_section_check_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_section',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_enable_email_section',
+			]
+		);
+
+		add_settings_field('dcms_subject_email_section',
+			__('Asunto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_input_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_section',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_subject_email_section',
+				'required' => true
+			]
+		);
+
+		add_settings_field('dcms_text_email_section',
+			__('Texto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_textarea_field'],
+			'dcms_notif_sfields',
+			'dcms_email_section_section',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_text_email_section',
+				'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
+                             %name% (nombre de usuario),
+                             %course_title% (título del curso),
+                             %section_title% (título de la seccion),
+                             ', 'dcms-notifications')
+			]
+		);
+	}
 
 
     private function fields_email_module(){
