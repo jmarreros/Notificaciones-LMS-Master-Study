@@ -2,8 +2,6 @@
 
 namespace dcms\notifications\includes;
 
-// use dcms\notifications\includes\Database;
-
 class Plugin{
 
     public function __construct(){

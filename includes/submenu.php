@@ -2,9 +2,6 @@
 
 namespace dcms\notifications\includes;
 
-/**
- * Class for creating a dashboard submenu
- */
 class Submenu{
     // Constructor
     public function __construct(){

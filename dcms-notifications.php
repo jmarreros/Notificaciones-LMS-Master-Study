@@ -19,7 +19,7 @@ use dcms\notifications\includes\Submenu;
 use dcms\notifications\includes\Process;
 use dcms\notifications\includes\Database;
 use dcms\notifications\includes\Settings;
-
+use dcms\notifications\includes\MetaboxTime;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -37,6 +37,7 @@ final class Loader{
 		define ('DCMS_NOTIF_URL', plugin_dir_url( __FILE__ ));
 		define ('DCMS_NOTIF_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_NOTIF_SUBMENU', 'options-general.php');
+		define ('DCMS_NOTIF_COURSE_TIME', 'dcms_course_time');
 	}
 
 	// Load all the files we need
@@ -47,6 +48,7 @@ final class Loader{
 		include_once ( DCMS_NOTIF_PATH . '/includes/process.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/database.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/settings.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/metabox-time.php');
 	}
 
 	// Load tex domain
@@ -72,11 +74,12 @@ final class Loader{
 		$this->load_includes();
 		$this->load_domain();
 		$this->add_link_plugin();
-		new Plugin;
-		new SubMenu;
-		new Process;
-		new Database;
-		new Settings;
+		new Plugin();
+		new SubMenu();
+		new Process();
+		new Database();
+		new Settings();
+		new MetaboxTime();
 	}
 
 }

@@ -104,7 +104,7 @@ class Process {
 		$body = str_replace( '%name%', $name, $body );
 		$body = str_replace( '%course_title%', $course_title, $body );
 		$body = str_replace( '%section_title%', $section_title, $body );
-		$body = str_replace( '%module_title%', $course_title, $body );
+		$body = str_replace( '%module_title%', $module_title, $body );
 
 		return wp_mail( $email, $subject, $body, $headers );
 	}

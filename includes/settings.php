@@ -57,7 +57,7 @@ class Settings{
 
 	private function fields_email_section(){
 		add_settings_section('dcms_email_section_section',
-			__('Configuración correo fin seccion', 'dcms-notifications'),
+			__('Configuración correo fin sección', 'dcms-notifications'),
 			[$this,'dcms_section_cb'],
 			'dcms_notif_sfields' );
 
@@ -106,7 +106,7 @@ class Settings{
     private function fields_email_module(){
 
         add_settings_section('dcms_email_section_module',
-                                __('Configuración correo modulo', 'dcms-notifications'),
+                                __('Configuración correo fin de módulo', 'dcms-notifications'),
                                 [$this,'dcms_section_cb'],
                                 'dcms_notif_sfields' );
 
@@ -156,7 +156,7 @@ class Settings{
     private function fields_email_course(){
 
         add_settings_section('dcms_email_section_course',
-                                __('Configuración correo curso', 'dcms-notifications'),
+                                __('Configuración correo fin de curso', 'dcms-notifications'),
                                 [$this,'dcms_section_cb'],
                                 'dcms_notif_sfields' );
 
