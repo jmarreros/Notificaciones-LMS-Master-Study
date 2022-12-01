@@ -2,7 +2,9 @@
 
 namespace dcms\notifications\includes;
 
-class Process {
+// Para las notificaciones de secciones, módulos y cursos al completarse
+
+class ProcessCompleted {
 
 	public function __construct() {
 		// Para las lecciones

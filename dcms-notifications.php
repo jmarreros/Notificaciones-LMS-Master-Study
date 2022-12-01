@@ -16,7 +16,8 @@ namespace dcms\notifications;
 
 use dcms\notifications\includes\Plugin;
 use dcms\notifications\includes\Submenu;
-use dcms\notifications\includes\Process;
+use dcms\notifications\includes\ProcessCompleted;
+use dcms\notifications\includes\ProcessAuto;
 use dcms\notifications\includes\Database;
 use dcms\notifications\includes\Settings;
 use dcms\notifications\includes\MetaboxTime;
@@ -46,7 +47,8 @@ final class Loader{
 		include_once ( DCMS_NOTIF_PATH . '/helpers/helper.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/plugin.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/submenu.php');
-		include_once ( DCMS_NOTIF_PATH . '/includes/process.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/process-completed.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/process-auto.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/database.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/settings.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/metabox-time.php');
@@ -65,7 +67,7 @@ final class Loader{
 	public function add_link_plugin(){
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), function( $links ){
 			return array_merge( array(
-				'<a href="' . esc_url( admin_url( DCMS_SUBMENU . '?page=notifications' ) ) . '">' . __( 'Configuración', 'dcms-notifications' ) . '</a>'
+				'<a href="' . esc_url( admin_url( DCMS_NOTIF_SUBMENU . '?page=notifications' ) ) . '">' . __( 'Configuración', 'dcms-notifications' ) . '</a>'
 			), $links );
 		} );
 	}
@@ -79,7 +81,8 @@ final class Loader{
 		new Plugin();
 		new Cron();
 		new SubMenu();
-		new Process();
+		new ProcessCompleted();
+		new ProcessAuto();
 		new Database();
 		new Settings();
 		new MetaboxTime();

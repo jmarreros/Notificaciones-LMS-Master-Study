@@ -22,18 +22,18 @@ class MetaboxTime{
 
 	public function dcms_add_metabox_content( $post ){
 		$start_time = get_post_meta( $post->ID, DCMS_NOTIF_COURSE_TIME, true );
-		$start_time = date('H:i', strtotime($start_time));
+		$start_time = date('H:i', $start_time);
 		?>
-		<label for="course-time" >Hora de inicio</label>
-		<input id="course-time" name="course-time" type="time" value="<?= $start_time ?>" >
+		<label for="course-time" >Hora de inicio (Formato 24h)</label>
+		<input id="course-time" name="course-time" type="time" value="<?= $start_time ?>" style="margin-top:5px" >
 		<?php
 	}
 
 	public function dcms_save_metabox_content( $post_id, $post ){
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
-		$meta_date = get_post_meta( $post_id, DCM_COURSE_DATE, true );
-		$start_time = $meta_date . ' ' . $_POST['course-time'];
+		$course_date = get_post_meta( $post_id, DCM_COURSE_DATE, true );
+		$start_time = strtotime($course_date . ' ' . $_POST['course-time']);
 		update_post_meta( $post_id, DCMS_NOTIF_COURSE_TIME, $start_time );
 	}
 }
