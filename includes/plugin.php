@@ -11,10 +11,15 @@ class Plugin{
 
     // Activate plugin - create options and database table
     public function dcms_activation_plugin(){
+	    // Create cron
+	    if( ! wp_next_scheduled( 'dcms_caes_notifications_hook' ) ) {
+		    wp_schedule_event( current_time( 'timestamp' ), 'dcms_caes_interval', 'dcms_caes_notifications_hook' );
+	    }
     }
 
     // Deactivate plugin
     public function dcms_deactivation_plugin(){
+	    wp_clear_scheduled_hook( 'dcms_caes_notifications_hook' );
     }
 
 }

@@ -20,6 +20,7 @@ use dcms\notifications\includes\Process;
 use dcms\notifications\includes\Database;
 use dcms\notifications\includes\Settings;
 use dcms\notifications\includes\MetaboxTime;
+use dcms\notifications\includes\Cron;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -49,6 +50,7 @@ final class Loader{
 		include_once ( DCMS_NOTIF_PATH . '/includes/database.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/settings.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/metabox-time.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/cron.php');
 	}
 
 	// Load tex domain
@@ -75,6 +77,7 @@ final class Loader{
 		$this->load_domain();
 		$this->add_link_plugin();
 		new Plugin();
+		new Cron();
 		new SubMenu();
 		new Process();
 		new Database();
