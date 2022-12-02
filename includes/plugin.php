@@ -11,6 +11,9 @@ class Plugin{
 
     // Activate plugin - create options and database table
     public function dcms_activation_plugin(){
+		$db = new Database();
+		$db->create_table_notification_user();
+
 	    // Create cron
 	    if( ! wp_next_scheduled( 'dcms_caes_notifications_hook' ) ) {
 		    wp_schedule_event( current_time( 'timestamp' ), 'dcms_caes_interval', 'dcms_caes_notifications_hook' );

@@ -26,6 +26,8 @@ class Cron{
 	// Cron process
 	public function dcms_cron_notif_process() {
 		error_log(print_r("Se ejecutó el evento cron " . date_i18n("Y-m-d H:i:s"),true) );
+		$reminder = new ProcessAuto();
+		$reminder->process_reminder();
 	}
 
 }

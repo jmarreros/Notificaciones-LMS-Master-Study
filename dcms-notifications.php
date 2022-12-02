@@ -40,6 +40,8 @@ final class Loader{
 		define ('DCMS_NOTIF_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_NOTIF_SUBMENU', 'options-general.php');
 		define ('DCMS_NOTIF_COURSE_TIME', 'dcms_course_time');
+		define ('DCMS_NOTIF_24_COMPLETE', 'dcms_notif_24_complete');
+		define ('DCMS_NOTIF_4_COMPLETE', 'dcms_notif_4_complete');
 	}
 
 	// Load all the files we need
