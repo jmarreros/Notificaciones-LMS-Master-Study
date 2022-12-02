@@ -17,7 +17,8 @@ class ProcessAuto {
 			foreach ( $courses as $course){
 
 				$diff = intval($course->time_start) - current_time('timestamp');
-
+				
+				error_log(print_r('Diferencia tiempo',true));
 				error_log(print_r($diff,true));
 
 				if ( $diff <= 14400 && $diff > 3600 ){ // 4h Notification

@@ -64,7 +64,8 @@ class Database {
 						FROM {$this->table_posts} p
 						INNER JOIN {$this->table_postmeta} pm ON p.ID = pm.post_id
 						WHERE p.post_type = 'stm-courses' AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "' 
-						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() <= $time_seconds";
+						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() <= $time_seconds
+						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() > 0";
 
 		return $this->wpdb->get_results( $sql );
 	}
