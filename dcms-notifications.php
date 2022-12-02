@@ -46,7 +46,7 @@ final class Loader{
 
 	// Load all the files we need
 	public function load_includes(){
-		include_once ( DCMS_NOTIF_PATH . '/helpers/helper.php');
+		include_once ( DCMS_NOTIF_PATH . '/helpers/functions.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/plugin.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/submenu.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/process-completed.php');

@@ -86,7 +86,7 @@ class ProcessCompleted {
 
 	// Función para enviar el correo
 	private function send_email( $name, $email, $section_title = '', $module_title = '', $course_title = '' ) {
-		$this->sender_configuration();
+		dcms_sender_configuration();
 
 		$options = get_option( 'dcms-notif_options' );
 
@@ -144,18 +144,5 @@ class ProcessCompleted {
 		return false;
 	}
 
-	// Sender configuration
-	private function sender_configuration() {
-		add_filter( 'wp_mail_from', function () {
-			$options = get_option( 'dcms-notif_options' );
-
-			return $options['dcms_sender_email'];
-		} );
-		add_filter( 'wp_mail_from_name', function () {
-			$options = get_option( 'dcms-notif_options' );
-
-			return $options['dcms_sender_name'];
-		} );
-	}
 
 }

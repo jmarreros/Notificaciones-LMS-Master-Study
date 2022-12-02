@@ -75,7 +75,15 @@ class Database {
 		$sql = "SELECT u.ID AS id, user_email AS email
 				FROM {$this->wpdb->prefix}stm_lms_user_courses uc
 				INNER JOIN {$this->table_user} u ON uc.user_id = u.ID
-				WHERE course_id = $course_id";
+				WHERE course_id = $course_id
+				AND user_id NOT IN (
+					SELECT user_id 
+					FROM {$this->table_notification_users} 
+					WHERE course_id = $course_id
+				)";
+
+		error_log(print_r('Cursos por usuario',true));
+		error_log(print_r($sql,true));
 
 		return $this->wpdb->get_results( $sql );
 	}
