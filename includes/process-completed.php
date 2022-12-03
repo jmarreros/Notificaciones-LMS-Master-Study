@@ -2,8 +2,7 @@
 
 namespace dcms\notifications\includes;
 
-// Para las notificaciones de secciones, módulos y cursos al completarse
-
+// Section finish, module finish, course finish Notifications
 class ProcessCompleted {
 
 	public function __construct() {
@@ -41,7 +40,7 @@ class ProcessCompleted {
 	}
 
 
-	// Métodos complementarios
+	// Other Methods
 	// --------------------------
 
 	// Send email notifications

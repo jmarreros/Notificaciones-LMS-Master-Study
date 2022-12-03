@@ -60,10 +60,14 @@ class Database {
 
 	// Get start courses <= time, default $time_seconds = 24h = 86400s
 	public function get_courses_start_in_time( $time_seconds = 86400 ) {
-		$sql = "SELECT p.ID AS id, pm.meta_value AS time_start
+		$sql = "SELECT p.ID AS id, 
+       					p.post_title AS course_name,
+       					pm.meta_value AS time_start
 						FROM {$this->table_posts} p
 						INNER JOIN {$this->table_postmeta} pm ON p.ID = pm.post_id
-						WHERE p.post_type = 'stm-courses' AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "' 
+						WHERE p.post_type = 'stm-courses' 
+						AND p.post_parent = 0
+						AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "' 
 						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() <= $time_seconds
 						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() > 0";
 
@@ -72,7 +76,9 @@ class Database {
 
 	// Get all user per course id
 	public function get_users_per_course( $course_id ) {
-		$sql = "SELECT u.ID AS id, user_email AS email
+		$sql = "SELECT u.ID AS id, 
+       				   u.display_name AS name, 
+       				   u.user_email AS email
 				FROM {$this->wpdb->prefix}stm_lms_user_courses uc
 				INNER JOIN {$this->table_user} u ON uc.user_id = u.ID
 				WHERE course_id = $course_id
@@ -81,9 +87,6 @@ class Database {
 					FROM {$this->table_notification_users} 
 					WHERE course_id = $course_id
 				)";
-
-		error_log(print_r('Cursos por usuario',true));
-		error_log(print_r($sql,true));
 
 		return $this->wpdb->get_results( $sql );
 	}

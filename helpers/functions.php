@@ -1,5 +1,4 @@
 <?php
-
 // Sender configuration
 function dcms_sender_configuration() {
 	add_filter( 'wp_mail_from', function () {
@@ -12,4 +11,15 @@ function dcms_sender_configuration() {
 
 		return $options['dcms_sender_name'];
 	} );
+}
+
+//Return unix time according timezone
+function dcms_strtotime( $str ) {
+	try {
+		$datetime = new \DateTime( $str, wp_timezone() );
+	} catch ( \Exception $e ) {
+		return false;
+	}
+
+	return $datetime->format( 'U' );
 }

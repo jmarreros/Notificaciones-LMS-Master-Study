@@ -14,10 +14,8 @@ class Cron{
 	public function dcms_custom_schedule( $schedules ) {
 
 		$schedules['dcms_caes_interval'] = array(
-//			'interval' => 1800,
-//			'display' => '30 minutes'
-			'interval' => 120,
-			'display' => '2 minutes'
+			'interval' => 1800,
+			'display' => '30 minutes'
 		);
 
 		return $schedules;

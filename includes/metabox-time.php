@@ -35,7 +35,7 @@ class MetaboxTime {
 		}
 
 		$course_date = get_post_meta( $post_id, DCM_COURSE_DATE, true );
-		$start_time  = $this->wp_strtotime( $course_date . ' ' . $_POST['course-time'] );
+		$start_time  = dcms_strtotime( $course_date . ' ' . $_POST['course-time'] );
 
 		if ( ! $start_time ) {
 			return;
@@ -44,16 +44,6 @@ class MetaboxTime {
 		update_post_meta( $post_id, DCMS_NOTIF_COURSE_TIME, $start_time );
 	}
 
-	//Aux function str to time
-	function wp_strtotime( $str ) {
-		try {
-			$datetime = new \DateTime( $str, wp_timezone() );
-		} catch ( \Exception $e ) {
-			return false;
-		}
-
-		return $datetime->format( 'U' );
-	}
 }
 
 
