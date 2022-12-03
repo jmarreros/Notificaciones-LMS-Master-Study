@@ -10,15 +10,19 @@ class ProcessAuto {
 		$db      = new Database();
 		$courses = $db->get_courses_start_in_time(); // Get all courses <= time start 24h
 
+		$options  = get_option( 'dcms-notif_options' );
+		$send_24h = isset( $options['dcms_enable_email_reminder24h'] );
+		$send_4h  = isset( $options['dcms_enable_email_reminder4h'] );
+
 		if ( $courses ) {
 			foreach ( $courses as $course ) {
 				$diff = intval( $course->time_start ) - current_time( 'timestamp', true );
 
 				// 4h Notification
-				if ( $diff <= 14400 && $diff > 3600 ) {
+				if ( $diff <= 14400 && $diff > 3600 && $send_4h ) {
 					$this->process_notification_user( $course, 4 );
 				} // 24h Notification
-				else if ( $diff > 14400 ) {
+				else if ( $diff > 14400 && $send_24h ) {
 					$this->process_notification_user( $course, 24 );
 				}
 			}
@@ -40,6 +44,7 @@ class ProcessAuto {
 
 		if ( ! $users ) {
 			add_post_meta( $course_id, $meta_key, 1 );
+
 			return;
 		}
 
@@ -58,7 +63,7 @@ class ProcessAuto {
 	}
 
 	// For sending email
-	private function send_email( $name, $email, $course_title, $hour ) :bool{
+	private function send_email( $name, $email, $course_title, $hour ): bool {
 		dcms_sender_configuration();
 		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
 
