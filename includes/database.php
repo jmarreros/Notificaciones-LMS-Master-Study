@@ -60,6 +60,9 @@ class Database {
 
 	// Get start courses <= time, default $time_seconds = 24h = 86400s
 	public function get_courses_start_in_time( $time_seconds = 86400 ) {
+
+		$unix_time_zone = dcms_strtotime(null);
+		
 		$sql = "SELECT p.ID AS id, 
        					p.post_title AS course_name,
        					pm.meta_value AS time_start
@@ -68,8 +71,8 @@ class Database {
 						WHERE p.post_type = 'stm-courses' 
 						AND p.post_parent = 0
 						AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "' 
-						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() <= $time_seconds
-						AND CAST(pm.meta_value AS SIGNED) - UNIX_TIMESTAMP() > 0";
+						AND CAST(pm.meta_value AS SIGNED) - $unix_time_zone <= $time_seconds
+						AND CAST(pm.meta_value AS SIGNED) - $unix_time_zone > 0";
 
 		return $this->wpdb->get_results( $sql );
 	}
