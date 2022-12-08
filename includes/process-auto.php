@@ -5,7 +5,7 @@ namespace dcms\notifications\includes;
 // Automatic Notifications
 class ProcessAuto {
 
-	// Main event, called by cron
+	// Main event, called by cron, reminders
 	public function process_reminder() {
 		$db      = new Database();
 		$courses = $db->get_courses_start_in_time(); // Get all courses <= time start 24h
@@ -33,7 +33,7 @@ class ProcessAuto {
 		$course_id    = $course->id ?? 0;
 		$course_title = $course->course_name ?? '';
 
-		$meta_key = constant( "DCMS_NOTIF_{$hour}_COMPLETE" );
+		$meta_key = constant( "DCMS_NOTIF_{$hour}H_COMPLETE" );
 		// Validate if sending emails was complete by course
 		if ( get_post_meta( $course_id, $meta_key, true ) ) {
 			return;
@@ -60,6 +60,31 @@ class ProcessAuto {
 
 			$db->insert_notifications_user( $data );
 		}
+	}
+
+	// For alert not start course
+	public function alert_not_start_course() {
+		$db    = new Database;
+		$users = $db->get_students_not_start_course( 3 * DAY_IN_SECONDS );
+		$hours = 72; // 3 days in hours
+
+		return;
+
+		foreach ( $users as $user ) {
+
+			//TODO: comprobar que el usuario no haya sido registrado en la tabla de logs para enviar correo
+
+			$sent = $this->send_email( $user->name, $user->email, $user->course_title, $hours );
+
+			// Save log data
+			$data['user_id']   = $user->id;
+			$data['course_id'] = $user->course_id;
+			$data['sent']      = $sent;
+			$data['hour']      = $hours;
+
+			$db->insert_notifications_user( $data );
+		}
+
 	}
 
 	// For sending email

@@ -16,8 +16,6 @@ namespace dcms\notifications;
 
 use dcms\notifications\includes\Plugin;
 use dcms\notifications\includes\Submenu;
-use dcms\notifications\includes\ProcessCompleted;
-use dcms\notifications\includes\ProcessAuto;
 use dcms\notifications\includes\Database;
 use dcms\notifications\includes\Settings;
 use dcms\notifications\includes\MetaboxTime;
@@ -40,8 +38,9 @@ final class Loader{
 		define ('DCMS_NOTIF_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_NOTIF_SUBMENU', 'options-general.php');
 		define ('DCMS_NOTIF_COURSE_TIME', 'dcms_course_time');
-		define ('DCMS_NOTIF_24_COMPLETE', 'dcms_notif_24_complete');
-		define ('DCMS_NOTIF_4_COMPLETE', 'dcms_notif_4_complete');
+		define ('DCMS_NOTIF_24H_COMPLETE', 'dcms_notif_24_complete');
+		define ('DCMS_NOTIF_4H_COMPLETE', 'dcms_notif_4_complete');
+//		define ('DCMS_NOTIF_72H_NOT_START', 'dcms_alert_72h_not_start');
 	}
 
 	// Load all the files we need
@@ -83,8 +82,6 @@ final class Loader{
 		new Plugin();
 		new Cron();
 		new SubMenu();
-		new ProcessCompleted();
-		new ProcessAuto();
 		new Database();
 		new Settings();
 		new MetaboxTime();

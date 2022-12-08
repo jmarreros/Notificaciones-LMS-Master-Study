@@ -14,15 +14,19 @@ class Plugin{
 		$db = new Database();
 		$db->create_table_notification_user();
 
-	    // Create cron
+	    // Create crons
 	    if( ! wp_next_scheduled( 'dcms_caes_notifications_hook' ) ) {
 		    wp_schedule_event( current_time( 'timestamp' ), 'dcms_caes_interval', 'dcms_caes_notifications_hook' );
+	    }
+	    if( ! wp_next_scheduled( 'dcms_caes_alert_hook' ) ) {
+		    wp_schedule_event( current_time( 'timestamp' ), 'daily', 'dcms_caes_alert_hook' );
 	    }
     }
 
     // Deactivate plugin
     public function dcms_deactivation_plugin(){
 	    wp_clear_scheduled_hook( 'dcms_caes_notifications_hook' );
+	    wp_clear_scheduled_hook( 'dcms_caes_alert_hook' );
     }
 
 }

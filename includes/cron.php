@@ -7,7 +7,8 @@ class Cron{
 
 	public function __construct(){
 		add_filter( 'cron_schedules', [ $this, 'dcms_custom_schedule' ]);
-		add_action( 'dcms_caes_notifications_hook', [ $this, 'dcms_cron_notif_process' ] );
+		add_action( 'dcms_caes_notifications_hook', [ $this, 'dcms_cron_notif_process' ] ); // For remainder
+		add_action( 'dcms_caes_alert_hook', [ $this, 'dcms_cron_alert_process' ] ); // For alerts
 	}
 
 	// Add new schedule
@@ -21,11 +22,16 @@ class Cron{
 		return $schedules;
 	}
 
-	// Cron process
+	// Cron process, every dcms_caes_interval (30 min), for remainders
 	public function dcms_cron_notif_process() {
-		error_log(print_r("Se ejecutó el evento cron " . date_i18n("Y-m-d H:i:s"),true) );
-		$reminder = new ProcessAuto();
-		$reminder->process_reminder();
+		$process = new ProcessAuto();
+		$process->process_reminder();
+	}
+
+	// Cron process, every 24 hours, for alerts
+	public function dcms_cron_alert_process(){
+		$process = new ProcessAuto();
+		$process->alert_not_start_course();
 	}
 
 }

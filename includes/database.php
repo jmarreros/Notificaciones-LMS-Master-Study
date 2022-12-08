@@ -60,10 +60,8 @@ class Database {
 
 	// Get start courses <= time, default $time_seconds = 24h = 86400s
 	public function get_courses_start_in_time( $time_seconds = 86400 ) {
-
-		$unix_time_zone = dcms_strtotime(null);
-		
-		$sql = "SELECT p.ID AS id, 
+		$current_unix_time_zone = dcms_strtotime( null );
+		$sql                    = "SELECT p.ID AS id, 
        					p.post_title AS course_name,
        					pm.meta_value AS time_start
 						FROM {$this->table_posts} p
@@ -71,8 +69,8 @@ class Database {
 						WHERE p.post_type = 'stm-courses' 
 						AND p.post_parent = 0
 						AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "' 
-						AND CAST(pm.meta_value AS SIGNED) - $unix_time_zone <= $time_seconds
-						AND CAST(pm.meta_value AS SIGNED) - $unix_time_zone > 0";
+						AND CAST(pm.meta_value AS SIGNED) - $current_unix_time_zone <= $time_seconds
+						AND CAST(pm.meta_value AS SIGNED) - $current_unix_time_zone > 0";
 
 		return $this->wpdb->get_results( $sql );
 	}
@@ -97,6 +95,31 @@ class Database {
 	// Insert reminders in table
 	public function insert_notifications_user( $data ) {
 		return $this->wpdb->insert( $this->table_notification_users, $data, [ '%d', '%d', '%d', '%d' ] );
+	}
+
+	// Alert between range of time
+	public function get_students_not_start_course( $days_seconds ) {
+		$current_unix_time_zone = dcms_strtotime( null );
+		$days_seconds_after     = $days_seconds + DAY_IN_SECONDS;
+		$sql = "SELECT
+					uc.user_id, 
+					u.display_name AS name,
+					u.user_email AS email,
+					uc.course_id,
+					p.post_title AS course_title,
+					pm.meta_value AS time_start
+					FROM {$this->wpdb->prefix}stm_lms_user_courses uc
+					INNER JOIN {$this->table_posts} p 
+					    ON p.ID = uc.course_id AND p.post_parent = 0
+					INNER JOIN {$this->table_postmeta} pm 
+					    ON uc.course_id = pm.post_id AND pm.meta_key = '" . DCMS_NOTIF_COURSE_TIME . "'
+					INNER JOIN {$this->table_user} u 
+					    ON u.ID = uc.user_id
+					WHERE uc.progress_percent = 0
+						AND ( CAST(pm.meta_value AS SIGNED) + $days_seconds ) <= $current_unix_time_zone
+						AND ( CAST(pm.meta_value AS SIGNED) + $days_seconds_after ) >= $current_unix_time_zone";
+
+		return $this->wpdb->get_results( $sql );
 	}
 
 }
