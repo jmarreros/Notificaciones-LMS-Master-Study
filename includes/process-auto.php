@@ -10,6 +10,7 @@ class ProcessAuto {
 		$db      = new Database();
 		$courses = $db->get_courses_start_in_time(); // Get all courses <= time start 24h
 
+		// Is enable
 		$options  = get_option( 'dcms-notif_options' );
 		$send_24h = isset( $options['dcms_enable_email_reminder24h'] );
 		$send_4h  = isset( $options['dcms_enable_email_reminder4h'] );
@@ -64,14 +65,22 @@ class ProcessAuto {
 
 	// For alert not start course
 	public function alert_not_start_course() {
-		$db    = new Database;
+		$db = new Database;
+
+		// Is enable
+		$options  = get_option( 'dcms-notif_options' );
+		$send_72h = isset( $options['dcms_enable_email_reminder72h'] );
+		if ( ! $send_72h ) {
+			return;
+		}
+
 		$users = $db->get_students_not_start_course( 3 * DAY_IN_SECONDS );
 		$hours = 72; // 3 days in hours
 
 		foreach ( $users as $user ) {
 
 			if ( ! $db->exists_notification_user( $user->id, $user->course_id, $hours ) ) {
-				 $sent = $this->send_email( $user->name, $user->email, $user->course_title, $hours );
+				$sent = $this->send_email( $user->name, $user->email, $user->course_title, $hours );
 
 				// Save log data
 				$data['user_id']   = $user->id;
@@ -81,9 +90,7 @@ class ProcessAuto {
 
 				$db->insert_notifications_user( $data );
 			}
-
 		}
-
 	}
 
 	// For sending email
