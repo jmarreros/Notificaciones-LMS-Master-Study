@@ -101,8 +101,8 @@ class Database {
 	public function get_students_not_start_course( $days_seconds ) {
 		$current_unix_time_zone = dcms_strtotime( null );
 		$days_seconds_after     = $days_seconds + DAY_IN_SECONDS;
-		$sql = "SELECT
-					uc.user_id, 
+		$sql                    = "SELECT
+					uc.user_id AS id, 
 					u.display_name AS name,
 					u.user_email AS email,
 					uc.course_id,
@@ -120,6 +120,17 @@ class Database {
 						AND ( CAST(pm.meta_value AS SIGNED) + $days_seconds_after ) >= $current_unix_time_zone";
 
 		return $this->wpdb->get_results( $sql );
+	}
+
+	// Validate if the user log email sent exists
+	public function exists_notification_user( $user_id, $course_id, $hour ): bool {
+		$sql = "SELECT id FROM $this->table_notification_users 
+				WHERE user_id = $user_id 
+					  AND  course_id = $course_id 
+					  AND `hour` = $hour 
+					  AND sent = 1";
+
+		return $this->wpdb->get_var( $sql ) ?? false;
 	}
 
 }

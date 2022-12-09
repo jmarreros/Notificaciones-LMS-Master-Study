@@ -40,7 +40,6 @@ final class Loader{
 		define ('DCMS_NOTIF_COURSE_TIME', 'dcms_course_time');
 		define ('DCMS_NOTIF_24H_COMPLETE', 'dcms_notif_24_complete');
 		define ('DCMS_NOTIF_4H_COMPLETE', 'dcms_notif_4_complete');
-//		define ('DCMS_NOTIF_72H_NOT_START', 'dcms_alert_72h_not_start');
 	}
 
 	// Load all the files we need

@@ -68,21 +68,20 @@ class ProcessAuto {
 		$users = $db->get_students_not_start_course( 3 * DAY_IN_SECONDS );
 		$hours = 72; // 3 days in hours
 
-		return;
-
 		foreach ( $users as $user ) {
 
-			//TODO: comprobar que el usuario no haya sido registrado en la tabla de logs para enviar correo
+			if ( ! $db->exists_notification_user( $user->id, $user->course_id, $hours ) ) {
+				 $sent = $this->send_email( $user->name, $user->email, $user->course_title, $hours );
 
-			$sent = $this->send_email( $user->name, $user->email, $user->course_title, $hours );
+				// Save log data
+				$data['user_id']   = $user->id;
+				$data['course_id'] = $user->course_id;
+				$data['sent']      = $sent;
+				$data['hour']      = $hours;
 
-			// Save log data
-			$data['user_id']   = $user->id;
-			$data['course_id'] = $user->course_id;
-			$data['sent']      = $sent;
-			$data['hour']      = $hours;
+				$db->insert_notifications_user( $data );
+			}
 
-			$db->insert_notifications_user( $data );
 		}
 
 	}

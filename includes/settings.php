@@ -20,6 +20,7 @@ class Settings{
         $this->fields_email_course();
 		$this->fields_email_reminder4h();
 	    $this->fields_email_reminder24h();
+	    $this->fields_email_reminder72h();
     }
 
     // Fields email general configuration
@@ -293,6 +294,54 @@ class Settings{
 			[
 				'dcms_option' => 'dcms-notif_options',
 				'label_for' => 'dcms_text_email_reminder24h',
+				'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
+                             %name% (nombre de usuario),
+                             %course_title% (título del curso),
+                             ', 'dcms-notifications')
+			]
+		);
+	}
+
+
+	private function fields_email_reminder72h(){
+
+		add_settings_section('dcms_email_section_reminder72h',
+			__('Configuración correo recordatorio 72h', 'dcms-notifications'),
+			[$this,'dcms_section_cb'],
+			'dcms_notif_sfields' );
+
+
+		add_settings_field('dcms_enable_email_reminder72h',
+			__('Habilitar', 'dcms-notifications'),
+			[$this, 'dcms_section_check_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_reminder72h',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_enable_email_reminder72h',
+			]
+		);
+
+		add_settings_field('dcms_subject_email_reminder72h',
+			__('Asunto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_input_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_reminder72h',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_subject_email_reminder72h',
+				'required' => true
+			]
+		);
+
+		add_settings_field('dcms_text_email_reminder72h',
+			__('Texto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_textarea_field'],
+			'dcms_notif_sfields',
+			'dcms_email_section_reminder72h',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_text_email_reminder72h',
 				'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
                              %name% (nombre de usuario),
                              %course_title% (título del curso),
