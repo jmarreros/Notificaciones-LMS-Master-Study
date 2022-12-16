@@ -7,6 +7,7 @@
       <path value="$PROJECT_DIR$/../../themes" />
       <path value="$PROJECT_DIR$/../masterstudy-lms-learning-management-system" />
       <path value="$PROJECT_DIR$/../masterstudy-lms-learning-management-system-pro" />
+      <path value="$PROJECT_DIR$/../woocommerce" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3">

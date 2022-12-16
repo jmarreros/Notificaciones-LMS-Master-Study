@@ -21,6 +21,7 @@ class Settings{
 		$this->fields_email_reminder4h();
 	    $this->fields_email_reminder24h();
 	    $this->fields_email_reminder72h();
+		$this->fields_email_failed_order();
     }
 
     // Fields email general configuration
@@ -345,6 +346,54 @@ class Settings{
 				'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
                              %name% (nombre de usuario),
                              %course_title% (título del curso),
+                             ', 'dcms-notifications')
+			]
+		);
+	}
+
+
+	private function fields_email_failed_order(){
+
+		add_settings_section('dcms_email_section_failed_order',
+			__('Configuración correo cuando el pago se cancela o a fallado', 'dcms-notifications'),
+			[$this,'dcms_section_cb'],
+			'dcms_notif_sfields' );
+
+
+		add_settings_field('dcms_enable_email_failed_order',
+			__('Habilitar', 'dcms-notifications'),
+			[$this, 'dcms_section_check_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_failed_order',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_enable_email_failed_order',
+			]
+		);
+
+		add_settings_field('dcms_subject_email_failed_order',
+			__('Asunto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_input_cb'],
+			'dcms_notif_sfields',
+			'dcms_email_section_failed_order',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_subject_email_failed_order',
+				'required' => true
+			]
+		);
+
+		add_settings_field('dcms_text_email_failed_order',
+			__('Texto correo', 'dcms-notifications'),
+			[$this, 'dcms_section_textarea_field'],
+			'dcms_notif_sfields',
+			'dcms_email_section_failed_order',
+			[
+				'dcms_option' => 'dcms-notif_options',
+				'label_for' => 'dcms_text_email_failed_order',
+				'description' => __('Puedes usar las siguientes variables que se pueden reemplazar:
+                             %name% (nombre de usuario),
+                             %order_id% (Número de la orden),
                              ', 'dcms-notifications')
 			]
 		);

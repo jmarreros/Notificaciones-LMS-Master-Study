@@ -21,6 +21,7 @@ use dcms\notifications\includes\Settings;
 use dcms\notifications\includes\MetaboxTime;
 use dcms\notifications\includes\Cron;
 use dcms\notifications\includes\ProcessCompleted;
+use dcms\notifications\includes\ProcessOrder;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -50,6 +51,7 @@ final class Loader{
 		include_once ( DCMS_NOTIF_PATH . '/includes/submenu.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/process-completed.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/process-auto.php');
+		include_once ( DCMS_NOTIF_PATH . '/includes/process-order.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/database.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/settings.php');
 		include_once ( DCMS_NOTIF_PATH . '/includes/metabox-time.php');
@@ -86,8 +88,8 @@ final class Loader{
 		new Settings();
 		new MetaboxTime();
 		new ProcessCompleted();
+		new ProcessOrder();
 	}
-
 }
 
 $dcms_notifications_process = new Loader();
