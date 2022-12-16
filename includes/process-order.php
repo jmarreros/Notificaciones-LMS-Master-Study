@@ -4,16 +4,18 @@ namespace dcms\notifications\includes;
 
 class ProcessOrder {
 	public function __construct() {
-		add_action( 'woocommerce_order_status_changed', [$this, 'order_status_change'], 20, 3 );
+		add_action( 'woocommerce_order_status_changed', [ $this, 'order_status_change' ], 20, 3 );
 	}
 
-	public function order_status_change($order_id, $old_status, $new_status){
-		if ( $new_status === 'failed' || $new_status === 'cancelled' ){
+	public function order_status_change( $order_id, $old_status, $new_status ) {
+
+
+		if ( $new_status === 'failed' || $new_status === 'cancelled' ) {
 			$order = wc_get_order( $order_id );
-			$user = $order->get_user();
-			$name = $user->display_name;
+			$user  = $order->get_user();
+			$name  = $user->display_name;
 			$email = $user->user_email;
-			$this->send_email($name, $email, $order_id);
+			$this->send_email( $name, $email, $order_id );
 		}
 	}
 
@@ -23,6 +25,11 @@ class ProcessOrder {
 		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
 
 		$options = get_option( 'dcms-notif_options' );
+
+		$enable = isset( $options['dcms_enable_email_failed_order'] );
+		if ( ! $enable ) {
+			return;
+		}
 
 		$subject = $options["dcms_subject_email_failed_order"];
 		$body    = $options["dcms_text_email_failed_order"];
