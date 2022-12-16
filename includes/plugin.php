@@ -14,7 +14,7 @@ class Plugin{
 		$db = new Database();
 		$db->create_table_notification_user();
 
-	    // Create crons
+	    // Create Crons
 	    if( ! wp_next_scheduled( 'dcms_caes_notifications_hook' ) ) {
 		    wp_schedule_event( current_time( 'timestamp' ), 'dcms_caes_interval', 'dcms_caes_notifications_hook' );
 	    }

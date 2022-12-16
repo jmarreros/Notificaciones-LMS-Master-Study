@@ -20,6 +20,7 @@ use dcms\notifications\includes\Database;
 use dcms\notifications\includes\Settings;
 use dcms\notifications\includes\MetaboxTime;
 use dcms\notifications\includes\Cron;
+use dcms\notifications\includes\ProcessCompleted;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -84,6 +85,7 @@ final class Loader{
 		new Database();
 		new Settings();
 		new MetaboxTime();
+		new ProcessCompleted();
 	}
 
 }

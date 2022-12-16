@@ -7,7 +7,7 @@ class Database {
 	private $table_postmeta;
 	private $table_posts;
 	private $table_user;
-	private $table_log_emails_users;
+	private $table_notification_users;
 
 	public function __construct() {
 		global $wpdb;

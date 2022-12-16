@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/../../../wp-includes" />
+      <path value="$PROJECT_DIR$/../../../wp-admin" />
+      <path value="$PROJECT_DIR$/../../themes" />
+      <path value="$PROJECT_DIR$/../masterstudy-lms-learning-management-system" />
+      <path value="$PROJECT_DIR$/../masterstudy-lms-learning-management-system-pro" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.3">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+</project>

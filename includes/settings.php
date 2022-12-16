@@ -11,7 +11,7 @@ class Settings{
         add_action('admin_init', [$this, 'init_configuration']);
     }
 
-    // Register seccions and fields
+    // Register sections and fields
     public function init_configuration(){
         register_setting('dcms_notif_options_bd', 'dcms-notif_options' );
         $this->fields_email_general();
