@@ -41,7 +41,7 @@ class ProcessAuto {
 		}
 
 		$db    = new Database();
-		$users = $db->get_users_per_course( $course_id );
+		$users = $db->get_users_per_course( $course_id, $hour );
 
 		if ( ! $users ) {
 			add_post_meta( $course_id, $meta_key, 1 );

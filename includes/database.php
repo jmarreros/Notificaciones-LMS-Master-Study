@@ -76,7 +76,7 @@ class Database {
 	}
 
 	// Get all user per course id
-	public function get_users_per_course( $course_id ) {
+	public function get_users_per_course( $course_id, $hour ) {
 		$sql = "SELECT u.ID AS id, 
        				   u.display_name AS name, 
        				   u.user_email AS email
@@ -86,7 +86,7 @@ class Database {
 				AND user_id NOT IN (
 					SELECT user_id 
 					FROM {$this->table_notification_users} 
-					WHERE course_id = $course_id
+					WHERE course_id = $course_id AND `hour` = $hour
 				)";
 
 		return $this->wpdb->get_results( $sql );
